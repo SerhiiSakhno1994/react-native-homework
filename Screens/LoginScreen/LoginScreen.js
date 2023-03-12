@@ -5,9 +5,11 @@ import {
   TextInput,
   Text,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 
 export default function LoginScreen() {
+  console.log(Platform.OS);
   const [count, setCount] = useState(0);
 
   const onPress = () => setCount((prevCount) => prevCount + 1);
@@ -21,7 +23,7 @@ export default function LoginScreen() {
         <View>
           <TextInput
             style={styles.input}
-            textAlign={"center"}
+            // textAlign={"left"}
             placeholder={"Адрес электронной почты"}
             placeholderTextColor={"#BDBDBD"}
           />
@@ -29,9 +31,9 @@ export default function LoginScreen() {
         <View style={{ marginTop: 16 }}>
           <TextInput
             style={styles.input}
-            textAlign={"center"}
+            // textAlign={"center"}
             placeholder={"Пароль"}
-            placeholderTextColor={"#BDBDBD"}
+            placeholderTextColor={"#BDBDBDed"}
             secureTextEntry={true}
           />
         </View>
@@ -76,6 +78,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F6F6F6",
     height: 50,
     borderWidth: 1,
+    paddingLeft: 16,
   },
   formText: {
     color: "#212121",
@@ -94,10 +97,7 @@ const styles = StyleSheet.create({
     marginTop: 43,
     justifyContent: "center",
     alignContent: "center",
-    // alignSelf: "center",
-    // paddingLeft: 160,
     marginHorizontal: 10,
-    // width: 343,
   },
   btnTitle: {
     color: "#fff",
