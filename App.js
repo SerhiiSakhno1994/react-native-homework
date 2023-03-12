@@ -12,6 +12,7 @@ import {
   ImageBackground,
 } from "react-native";
 import LoginScreen from "./Screens/LoginScreen/LoginScreen";
+import RegistrationScreen from "./Screens/RegistrationScreen/RegistrationScreen";
 export default function App() {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -20,7 +21,7 @@ export default function App() {
           source={require("./assets/pfon.jpg")}
           style={styles.image}
         >
-          <LoginScreen></LoginScreen>
+          <RegistrationScreen></RegistrationScreen>
         </ImageBackground>
       </View>
     </TouchableWithoutFeedback>
