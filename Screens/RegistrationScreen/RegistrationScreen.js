@@ -1,64 +1,102 @@
 import React, { useState } from "react";
 import {
-  View,
   StyleSheet,
-  TextInput,
   Text,
+  View,
+  TextInput,
   TouchableOpacity,
-  Platform,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from "react-native";
 
-export default function RegistrationScreen() {
-  console.log(Platform.OS);
-  const [count, setCount] = useState(0);
+const initialState = {
+  userName: "",
+  email: "",
+  password: "",
+};
 
-  const onPress = () => setCount((prevCount) => prevCount + 1);
-  console.log(count);
+export default function RegistrationScreen() {
+  const [isShowKeyboard, setIsShowKeyboard] = useState(false);
+  const [user, setUser] = useState(initialState);
+
+  const onPress = () => {
+    setIsShowKeyboard(false);
+    Keyboard.dismiss();
+  };
+
+  const keyboardHide = () => {
+    setIsShowKeyboard(false);
+    Keyboard.dismiss();
+    console.log(user);
+    setUser(initialState);
+  };
+
   return (
-    <View style={styles.container}>
-      <View style={styles.containerText}>
-        <Text style={styles.formText}>Регистрация</Text>
-      </View>
-      <View style={styles.form}>
-        <View>
-          <TextInput
-            style={styles.input}
-            // textAlign={"left"}
-            placeholder={"Логин"}
-            placeholderTextColor={"#BDBDBD"}
-          />
+    <TouchableWithoutFeedback onPress={onPress}>
+      <View style={styles.container}>
+        <View style={styles.containerText}>
+          <Text style={styles.formText}>Регистрация</Text>
         </View>
-        <View>
-          <TextInput
-            style={[styles.input, { marginTop: 16 }]}
-            // textAlign={"left"}
-            placeholder={"Адрес электронной почты"}
-            placeholderTextColor={"#BDBDBD"}
-          />
-        </View>
-        <View style={{ marginTop: 16 }}>
-          <TextInput
-            style={styles.input}
-            // textAlign={"center"}
-            placeholder={"Пароль"}
-            placeholderTextColor={"#BDBDBDed"}
-            secureTextEntry={true}
-          />
-        </View>
-        <View>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={onPress}
-            activeOpacity={0.8}
+        <View style={styles.form}>
+          <View>
+            <TextInput
+              style={styles.input}
+              placeholder={"Логин"}
+              placeholderTextColor={"#BDBDBD"}
+              onFocus={() => setIsShowKeyboard(true)}
+              value={user.userName}
+              onChangeText={(value) =>
+                setUser((prevState) => ({ ...prevState, userName: value }))
+              }
+            />
+          </View>
+          <View>
+            <TextInput
+              style={[styles.input, { marginTop: 16 }]}
+              // textAlign={"left"}
+              placeholder={"Адрес электронной почты"}
+              placeholderTextColor={"#BDBDBD"}
+              onFocus={() => setIsShowKeyboard(true)}
+              value={user.email}
+              onChangeText={(value) =>
+                setUser((prevState) => ({ ...prevState, email: value }))
+              }
+            />
+          </View>
+          <View style={{ marginTop: 16 }}>
+            <TextInput
+              style={styles.input}
+              // textAlign={"center"}
+              placeholder={"Пароль"}
+              placeholderTextColor={"#BDBDBDed"}
+              secureTextEntry={true}
+              onFocus={() => setIsShowKeyboard(true)}
+              value={user.password}
+              onChangeText={(value) =>
+                setUser((prevState) => ({ ...prevState, password: value }))
+              }
+            />
+          </View>
+          <View>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={keyboardHide}
+              activeOpacity={0.8}
+            >
+              <Text style={styles.btnTitle}>Зарегистрироваться</Text>
+            </TouchableOpacity>
+          </View>
+          <View
+            style={{
+              ...styles.registration,
+              marginBottom: isShowKeyboard ? 20 : 132,
+            }}
           >
-            <Text style={styles.btnTitle}>Зарегистрироваться</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.registration}>
-          <Text style={styles.registrationText}>Уже есть аккаунт? Войти</Text>
+            <Text style={styles.registrationText}>Уже есть аккаунт? Войти</Text>
+          </View>
         </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -115,7 +153,7 @@ const styles = StyleSheet.create({
     alignContent: "center",
     alignSelf: "center",
     marginTop: 16,
-    marginBottom: 132,
+    // marginBottom: 132,
   },
   registrationText: {
     fontSize: 16,

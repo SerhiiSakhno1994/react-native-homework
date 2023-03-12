@@ -1,58 +1,89 @@
 import React, { useState } from "react";
 import {
-  View,
   StyleSheet,
-  TextInput,
   Text,
+  View,
+  TextInput,
   TouchableOpacity,
-  Platform,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from "react-native";
+const initialState = {
+  email: "",
+  password: "",
+};
 
 export default function LoginScreen() {
-  console.log(Platform.OS);
-  const [count, setCount] = useState(0);
+  const [isShowKeyboard, setIsShowKeyboard] = useState(false);
+  const [user, setUser] = useState(initialState);
 
-  const onPress = () => setCount((prevCount) => prevCount + 1);
-  console.log(count);
+  const onPress = () => {
+    setIsShowKeyboard(false);
+    Keyboard.dismiss();
+  };
+
+  const keyboardHide = () => {
+    setIsShowKeyboard(false);
+    Keyboard.dismiss();
+    console.log(user);
+    setUser(initialState);
+  };
   return (
-    <View style={styles.container}>
-      <View style={styles.containerText}>
-        <Text style={styles.formText}>Войти</Text>
-      </View>
-      <View style={styles.form}>
-        <View>
-          <TextInput
-            style={styles.input}
-            // textAlign={"left"}
-            placeholder={"Адрес электронной почты"}
-            placeholderTextColor={"#BDBDBD"}
-          />
+    <TouchableWithoutFeedback onPress={onPress}>
+      <View style={styles.container}>
+        <View style={styles.containerText}>
+          <Text style={styles.formText}>Войти</Text>
         </View>
-        <View style={{ marginTop: 16 }}>
-          <TextInput
-            style={styles.input}
-            // textAlign={"center"}
-            placeholder={"Пароль"}
-            placeholderTextColor={"#BDBDBDed"}
-            secureTextEntry={true}
-          />
-        </View>
-        <View>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={onPress}
-            activeOpacity={0.8}
+        <View style={styles.form}>
+          <View>
+            <TextInput
+              style={styles.input}
+              // textAlign={"left"}
+              placeholder={"Адрес электронной почты"}
+              placeholderTextColor={"#BDBDBD"}
+              onFocus={() => setIsShowKeyboard(true)}
+              value={user.email}
+              onChangeText={(value) =>
+                setUser((prevState) => ({ ...prevState, email: value }))
+              }
+            />
+          </View>
+          <View style={{ marginTop: 16 }}>
+            <TextInput
+              style={styles.input}
+              // textAlign={"center"}
+              placeholder={"Пароль"}
+              placeholderTextColor={"#BDBDBDed"}
+              secureTextEntry={true}
+              onFocus={() => setIsShowKeyboard(true)}
+              value={user.password}
+              onChangeText={(value) =>
+                setUser((prevState) => ({ ...prevState, password: value }))
+              }
+            />
+          </View>
+          <View>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={keyboardHide}
+              activeOpacity={0.8}
+            >
+              <Text style={styles.btnTitle}>Войти</Text>
+            </TouchableOpacity>
+          </View>
+          <View
+            style={{
+              ...styles.registration,
+              marginBottom: isShowKeyboard ? 20 : 132,
+            }}
           >
-            <Text style={styles.btnTitle}>Войти</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.registration}>
-          <Text style={styles.registrationText}>
-            Нет аккаунта? Зарегистрироваться
-          </Text>
+            <Text style={styles.registrationText}>
+              Нет аккаунта? Зарегистрироваться
+            </Text>
+          </View>
         </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -83,6 +114,7 @@ const styles = StyleSheet.create({
   formText: {
     color: "#212121",
     fontSize: 30,
+    fontFamily: "Roboto-Regular",
   },
   containerText: {
     alignContent: "center",
@@ -109,7 +141,6 @@ const styles = StyleSheet.create({
     alignContent: "center",
     alignSelf: "center",
     marginTop: 16,
-    marginBottom: 132,
   },
   registrationText: {
     fontSize: 16,
