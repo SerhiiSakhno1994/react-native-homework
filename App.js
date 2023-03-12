@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import {
   StyleSheet,
   View,
@@ -10,9 +10,20 @@ import {
   Alert,
   Button,
   ImageBackground,
+  Text,
 } from "react-native";
+import { useFonts } from "expo-font";
+
 import LoginScreen from "./Screens/LoginScreen/LoginScreen";
 import RegistrationScreen from "./Screens/RegistrationScreen/RegistrationScreen";
+import * as Font from "expo-font";
+import { AppLoading } from "expo";
+const loadApplication = async () => {
+  await Font.loadAsync({
+    "Roboto-Regular": require("./assets/fonts/Roboto-Regular.ttf"),
+  });
+};
+
 export default function App() {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -21,7 +32,7 @@ export default function App() {
           source={require("./assets/pfon.jpg")}
           style={styles.image}
         >
-          <RegistrationScreen></RegistrationScreen>
+          <LoginScreen></LoginScreen>
         </ImageBackground>
       </View>
     </TouchableWithoutFeedback>
