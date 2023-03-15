@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Keyboard,
   TouchableWithoutFeedback,
+  Switch,
 } from "react-native";
 
 const initialState = {
@@ -76,6 +77,7 @@ export default function RegistrationScreen() {
                 setUser((prevState) => ({ ...prevState, password: value }))
               }
             />
+            <Switch />
           </View>
           <View>
             <TouchableOpacity
@@ -127,6 +129,8 @@ const styles = StyleSheet.create({
   formText: {
     color: "#212121",
     fontSize: 30,
+    fontFamily: "Roboto-Regular",
+    fontStyle: "normal",
   },
   containerText: {
     alignContent: "center",
@@ -158,5 +162,6 @@ const styles = StyleSheet.create({
   registrationText: {
     fontSize: 16,
     color: "#1B4371",
+    fontFamily: "Roboto-Regular",
   },
 });

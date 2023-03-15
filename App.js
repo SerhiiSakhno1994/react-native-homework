@@ -13,26 +13,34 @@ import {
   Text,
 } from "react-native";
 import { useFonts } from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
 
 import LoginScreen from "./Screens/LoginScreen/LoginScreen";
 import RegistrationScreen from "./Screens/RegistrationScreen/RegistrationScreen";
-import * as Font from "expo-font";
-import { AppLoading } from "expo";
-const loadApplication = async () => {
-  await Font.loadAsync({
+
+SplashScreen.preventAutoHideAsync();
+export default function App() {
+  const [fontsLoaded] = useFonts({
     "Roboto-Regular": require("./assets/fonts/Roboto-Regular.ttf"),
   });
-};
 
-export default function App() {
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return null;
+  }
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
+      <View style={styles.container} onLayout={onLayoutRootView}>
         <ImageBackground
           source={require("./assets/pfon.jpg")}
           style={styles.image}
         >
-          <LoginScreen></LoginScreen>
+          <RegistrationScreen></RegistrationScreen>
         </ImageBackground>
       </View>
     </TouchableWithoutFeedback>
