@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Keyboard,
   TouchableWithoutFeedback,
+  Switch,
 } from "react-native";
 const initialState = {
   email: "",
@@ -38,7 +39,6 @@ export default function LoginScreen() {
           <View>
             <TextInput
               style={styles.input}
-              // textAlign={"left"}
               placeholder={"Адрес электронной почты"}
               placeholderTextColor={"#BDBDBD"}
               onFocus={() => setIsShowKeyboard(true)}
@@ -51,7 +51,6 @@ export default function LoginScreen() {
           <View style={{ marginTop: 16 }}>
             <TextInput
               style={styles.input}
-              // textAlign={"center"}
               placeholder={"Пароль"}
               placeholderTextColor={"#BDBDBDed"}
               secureTextEntry={true}
@@ -62,6 +61,7 @@ export default function LoginScreen() {
               }
             />
           </View>
+          <Switch />
           <View>
             <TouchableOpacity
               style={styles.button}
@@ -89,7 +89,6 @@ export default function LoginScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
     justifyContent: "flex-start",
     alignContent: "center",
     borderTopLeftRadius: 25,
@@ -114,7 +113,6 @@ const styles = StyleSheet.create({
   formText: {
     color: "#212121",
     fontSize: 30,
-    fontFamily: "Roboto-Regular",
   },
   containerText: {
     alignContent: "center",
